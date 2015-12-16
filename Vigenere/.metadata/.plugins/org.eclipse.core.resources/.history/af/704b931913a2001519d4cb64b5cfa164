@@ -1,0 +1,131 @@
+package ie.gmit.sw;
+
+import java.util.Map;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentHashMap;
+
+public class CrackerWorker {
+
+	private BlockingQueue<MessageObject> inQueue = new ArrayBlockingQueue<MessageObject>(10);
+	private Map<Long, String> outQueue = new ConcurrentHashMap<Long, String>();
+	
+	public CrackerWorker() {
+		
+	}
+	public void add(final MessageObject mo){
+		
+		try{
+			new Thread(new Runnable() {
+				
+				@Override
+				public void run() {
+
+					try {
+						inQueue.put(mo);
+						outQueue.put(mo.getJobNumber(),null );
+					} catch (InterruptedException e) {
+						
+						e.printStackTrace();
+					}
+				}
+			}).start();
+			
+		}catch(Exception e){
+			
+		}
+	}//end add 
+	public void take() {
+		
+		try {
+					
+			new Thread(new Runnable() {
+				public void run() {
+					MessageObject msObj = inQueue.poll();
+					
+					outQueue.put(msObj.getJobNumber(), msObj.getCyperText());
+				}
+			}).start();
+			//return om;
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		//return om;
+	
+	} 
+	
+	//++++++++++++++++++++++++++++++++++getters setters for Queues
+	public BlockingQueue<MessageObject> getInQueue() {
+		return this.inQueue;
+	}
+
+	public void setInQueue(BlockingQueue<MessageObject> inQueue) {
+		this.inQueue = inQueue;
+	}
+
+	public Map<Long, String> getOutQueue() {
+		return this.outQueue;
+	}
+
+	public void setOutQueue(Map<Long, String> outQueue) {
+		this.outQueue = outQueue;
+	}
+	
+	//+++++++++++++++++++++++Queue++++++++++++++++++++++++++++++++
+	public boolean containsKey(Object key) {
+		return outQueue.containsKey(key);
+	}
+
+	public boolean contains(Object arg0) {
+		return inQueue.contains(arg0);
+	}
+
+	public boolean equals(Object arg0) {
+		return inQueue.equals(arg0);
+	}
+
+	public boolean offer(MessageObject mo) {
+		return inQueue.offer(mo);
+	}
+
+	public MessageObject poll() {
+		return inQueue.poll();
+	}
+
+	public void put(MessageObject mo) throws InterruptedException {
+		inQueue.put(mo);
+	}
+
+	public boolean remove(Object arg0) {
+		return inQueue.remove(arg0);
+	}
+
+	public int Queuesize() {
+		return inQueue.size();
+	}
+
+	public boolean containsValue(Object value) {
+		return outQueue.containsValue(value);
+	}
+//+++++++++++++++++++++++++Map+++++++++++++++++++++++
+	public String get(long jobNumber) {
+		return outQueue.get(jobNumber);
+	}
+
+	public boolean isEmpty() {
+		return outQueue.isEmpty();
+	}
+
+	public String put(Long key, String value) {
+		return outQueue.put(key, value);
+	}
+
+	public int Mapsize() {
+		return outQueue.size();
+	}
+	
+	
+	
+	
+	
+}

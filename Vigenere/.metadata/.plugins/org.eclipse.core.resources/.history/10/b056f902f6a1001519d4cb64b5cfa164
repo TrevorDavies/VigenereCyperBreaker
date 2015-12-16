@@ -1,0 +1,44 @@
+package ie.gmit.sw;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+public class OutQueue {
+	
+	private Map<Long,String> outQueue = new ConcurrentHashMap<Long,String>();
+
+	public boolean containsKey(Object key) {
+		return outQueue.containsKey(key);
+	}
+
+	public boolean containsValue(Object value) {
+		return outQueue.containsValue(value);
+	}
+
+	public boolean equals(Object o) {
+		return outQueue.equals(o);
+	}
+
+	public String get(Object key) {
+		return outQueue.get(key);
+	}
+
+	public boolean isEmpty() {
+		return outQueue.isEmpty();
+	}
+
+	public String put(Long key, String value) {
+		return outQueue.put(key, value);
+	}
+
+	public String remove(Object key) {
+		return outQueue.remove(key);
+	}
+
+	public int size() {
+		return outQueue.size();
+	}
+	
+	
+	
+
+}

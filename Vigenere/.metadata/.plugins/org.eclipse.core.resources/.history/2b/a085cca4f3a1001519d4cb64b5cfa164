@@ -1,0 +1,8 @@
+package ie.gmit.sw;
+
+public class MessageObject {
+	
+	private long jobNumber;
+	private String cyperText;
+	private int maxKeyLength;
+}

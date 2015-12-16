@@ -1,0 +1,27 @@
+package ie.gmit.sw;
+
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class InQueue {
+
+	private Queue<MessageObject> inQueue =  new LinkedList<MessageObject>();
+
+	public boolean isEmpty() {
+		return inQueue.isEmpty();
+	}
+
+	public boolean offer(MessageObject arg0) {
+		return inQueue.offer(arg0);
+	}
+
+	public MessageObject poll() {
+		return inQueue.poll();
+	}
+
+	public int size() {
+		return inQueue.size();
+	}
+	
+	
+}

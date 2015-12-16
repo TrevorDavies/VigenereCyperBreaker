@@ -1,0 +1,47 @@
+package ie.gmit.sw;
+
+import java.rmi.Naming;
+import java.util.Map;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentHashMap;
+
+public class RmiRequestHandler implements Runnable {
+	
+	final int controller = 1; 
+	
+	private BlockingQueue<MessageObject> queue;
+	private Map<Long, String> outMap = new ConcurrentHashMap<Long, String>();
+	
+	private MessageObject msObj;
+	
+	public RmiRequestHandler(BlockingQueue<MessageObject> queue, Map<Long, String> out) {
+		super();
+		this.queue = queue;
+		this.outMap = out;
+	}
+
+	@Override
+	public void run() {
+		try{
+			while(controller!=0){
+				msObj= queue.poll();
+				
+				VigenereBreaker vb = (VigenereBreaker) Naming.lookup("///cypher-service");
+				
+				String result = vb.decrypt(msObj.getCyperText(),msObj.getMaxKeyLength());
+				
+				outMap.put(msObj.getJobNumber(), result);
+			}
+			
+		}catch(Exception e){
+			
+		}
+		
+	}
+
+	public boolean add(MessageObject arg0) {
+		return queue.add(arg0);
+	}
+	
+	
+}

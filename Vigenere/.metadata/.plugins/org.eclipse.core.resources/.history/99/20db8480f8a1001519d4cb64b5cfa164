@@ -1,0 +1,51 @@
+package ie.gmit.sw;
+
+import java.util.Map;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentHashMap;
+
+public class CrackerWorker {
+
+	private BlockingQueue<MessageObject> queue = new ArrayBlockingQueue<MessageObject>(10);
+	private Map<Long, String> out = new ConcurrentHashMap<Long, String>();
+	
+	public CrackerWorker(BlockingQueue<MessageObject> queue, Map<Long, String> out) {
+		super();
+		this.queue = queue;
+		this.out = out;
+	}
+
+	public CrackerWorker() {
+		super();
+	}
+
+	public boolean containsKey(Object key) {
+		return out.containsKey(key);
+	}
+
+	public boolean containsValue(Object value) {
+		return out.containsValue(value);
+	}
+
+	public String get(long jobNumber) {
+		return out.get(jobNumber);
+	}
+
+	public boolean isEmpty() {
+		return out.isEmpty();
+	}
+
+	public String put(Long key, String value) {
+		return out.put(key, value);
+	}
+
+	public int Mapsize() {
+		return out.size();
+	}
+	
+	
+	
+	
+	
+}
